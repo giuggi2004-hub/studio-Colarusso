@@ -1,0 +1,9 @@
+{
+  "name": "studio-colarusso",
+  "private": true,
+  "description": "Studio Colarusso — sito, modulo contatti e gestionale",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}

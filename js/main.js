@@ -104,7 +104,7 @@ function buildSheet({ label = "", kicker = "Studio Colarusso", logoRect = null }
   const LF = [[-80, -60], ...fiber(1), [-80, h + 60]];
   const RF = [...fiber(-1), [w + 80, h + 60], [w + 80, -60]];
   const content = logoRect
-    ? `<image href="img/logo-chiaro.png" x="${logoRect.x}" y="${logoRect.y}" width="${logoRect.width}" height="${logoRect.height}"/>`
+    ? `<image href="logo-chiaro.png" x="${logoRect.x}" y="${logoRect.y}" width="${logoRect.width}" height="${logoRect.height}"/>`
     : `<text x="${w / 2}" y="${h / 2}" text-anchor="middle" dominant-baseline="middle" fill="${PAPER}"
          font-family="Playfair Display, Georgia, serif" font-size="${Math.min(w * 0.13, 150)}" letter-spacing="-2">${label}</text>
        <line x1="${w / 2 - 24}" x2="${w / 2 + 24}" y1="${h / 2 + Math.min(w * 0.09, 100)}" y2="${h / 2 + Math.min(w * 0.09, 100)}" stroke="${RED}" stroke-width="1.5"/>

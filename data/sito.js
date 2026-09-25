@@ -10,7 +10,6 @@ window.SITO = {
   },
   "operaInApertura": 37,
   "selezione": [
-    37,
     5,
     1,
     15,
@@ -24,7 +23,10 @@ window.SITO = {
     45,
     44,
     39,
-    42
+    42,
+    3,
+    8,
+    37
   ],
   "testi": {
     "heroSottotitolo": "Décollage tra memoria collettiva, cultura pop e indagine psicologica.",
@@ -96,7 +98,7 @@ window.SITO = {
     },
     {
       "n": 3,
-      "titolo": "X Mirella",
+      "titolo": "“X Mirella”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 90 cm",
@@ -514,7 +516,7 @@ window.SITO = {
     },
     {
       "n": 35,
-      "titolo": "\"Rose 2\"",
+      "titolo": "“Rose 2”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 120 cm",
@@ -527,7 +529,7 @@ window.SITO = {
     },
     {
       "n": 36,
-      "titolo": "\"Lisa 3\"",
+      "titolo": "“Lisa 3”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "",
@@ -540,7 +542,7 @@ window.SITO = {
     },
     {
       "n": 37,
-      "titolo": "E POI C'È LEI …",
+      "titolo": "“E POI C’È LEI …”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 120 cm",
@@ -553,7 +555,7 @@ window.SITO = {
     },
     {
       "n": 38,
-      "titolo": "\"Rossella\"",
+      "titolo": "“Rossella”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 120 cm",
@@ -566,7 +568,7 @@ window.SITO = {
     },
     {
       "n": 39,
-      "titolo": "\"Lisa 3\"",
+      "titolo": "“Lisa 3”",
       "anno": "2026",
       "tecnica": "Décollage su carta",
       "misure": "90 × 120 cm",
@@ -579,7 +581,7 @@ window.SITO = {
     },
     {
       "n": 40,
-      "titolo": "\"Arabella\"",
+      "titolo": "“Arabella”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 120 cm",
@@ -592,7 +594,7 @@ window.SITO = {
     },
     {
       "n": 41,
-      "titolo": "\"Dive in secondo piano 1\"",
+      "titolo": "“Dive in secondo piano 1”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 120 cm",
@@ -605,7 +607,7 @@ window.SITO = {
     },
     {
       "n": 42,
-      "titolo": "\"Lisa 4\"",
+      "titolo": "“Lisa 4”",
       "anno": "2026",
       "tecnica": "Décollage su carta",
       "misure": "90 × 120 cm",
@@ -618,7 +620,7 @@ window.SITO = {
     },
     {
       "n": 43,
-      "titolo": "\"Lina 1\"",
+      "titolo": "“Lina 1”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 90 cm",
@@ -631,7 +633,7 @@ window.SITO = {
     },
     {
       "n": 44,
-      "titolo": "\"Stasera…… POIS\"",
+      "titolo": "“Stasera…… POIS”",
       "anno": "2026",
       "tecnica": "Décollage su carta",
       "misure": "90 × 90 cm",
@@ -644,7 +646,7 @@ window.SITO = {
     },
     {
       "n": 45,
-      "titolo": "\"Erika\"",
+      "titolo": "“Erika”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 90 cm",
@@ -657,7 +659,7 @@ window.SITO = {
     },
     {
       "n": 46,
-      "titolo": "\"Dive in secondo piano 2\"",
+      "titolo": "“Dive in secondo piano 2”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 90 cm",
@@ -670,7 +672,7 @@ window.SITO = {
     },
     {
       "n": 47,
-      "titolo": "\"La casa bianca è a pois\"",
+      "titolo": "“La casa bianca è a pois”",
       "anno": "2026",
       "tecnica": "Décollage",
       "misure": "90 × 90 cm",

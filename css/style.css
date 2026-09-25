@@ -277,7 +277,7 @@ textarea{resize:vertical}
 .v-next{right:368px}
 
 /* ---------------- TORNA SU (taglierino) ---------------- */
-.to-top{position:fixed;right:clamp(20px,3vw,44px);bottom:clamp(16px,2.6vw,36px);z-index:90;width:14px;padding:0;background:none;border:0;
+.to-top{position:fixed;right:clamp(20px,3vw,44px);bottom:clamp(70px,11vh,120px);z-index:90;width:14px;padding:0;background:none;border:0;
   opacity:0;visibility:hidden;transform:translateY(16px) rotate(24deg);transform-origin:50% 50%;
   transition:opacity .9s var(--ease-out),transform .9s var(--ease-out),visibility 0s linear .9s}
 .to-top.show{opacity:1;visibility:visible;transform:rotate(24deg);transition:opacity .9s var(--ease-out),transform .8s var(--ease),visibility 0s}
@@ -404,7 +404,7 @@ html{-webkit-tap-highlight-color:transparent}
   .foot{padding-left:20px;padding-right:20px}
   .legal-links{flex-direction:column;gap:6px}
   .legal-links button{text-align:left;padding:10px 0}
-  .to-top{width:12px}
+  .to-top{width:12px;right:18px;bottom:calc(24vh + env(safe-area-inset-bottom))}
 }
 
 @media (prefers-reduced-motion:reduce){

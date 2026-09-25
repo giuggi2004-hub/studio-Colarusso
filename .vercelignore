@@ -1,0 +1,14 @@
+# Pubblica SOLO i file del sito. Qualsiasi altro file lasciato per errore
+# nella cartella principale (vecchi .js, .css, .txt, cartella admin...) non va online.
+/*
+!api
+!css
+!js
+!data
+!img
+!index.html
+!*.webp
+!*.png
+!package.json
+!vercel.json
+!robots.txt

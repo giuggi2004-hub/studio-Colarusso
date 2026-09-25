@@ -1,6 +1,6 @@
 /* ==========================================================
    STUDIO COLARUSSO — interazioni
-   Non serve modificare questo file: i contenuti sono in data/sito.js (gestiti da /admin/)
+   I contenuti sono in data/sito.js
    ========================================================== */
 (() => {
 "use strict";
@@ -18,7 +18,7 @@ const pad2 = n => String(n).padStart(2, "0");
    1. CONTENUTI (da data/sito.js)
 ------------------------------------------------------------------ */
 const SITO = window.SITO || {};
-const OPERE = SITO.opere || [];
+const OPERE = (SITO.opere || []).filter(o => !o.nascosta);
 const SELEZIONE = SITO.selezione || [];
 const CONTATTI = SITO.contatti || {};
 const T = SITO.testi || {};
@@ -265,6 +265,7 @@ function fillViewer(i) {
   lens.style.backgroundImage = `url("${o.foto}")`;
   $("#vCount").textContent = `${pad2(cur_i + 1)} / ${pad2(OPERE.length)}`;
   $("#vTitle").textContent = o.titolo;
+  $("#vDesc").textContent = o.descrizione || ""; $("#vDesc").hidden = !o.descrizione;
   $("#vData").innerHTML = [["Tecnica", o.tecnica], ["Misure", o.misure], ["Anno", o.anno]]
     .filter(r => r[1]).map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("") + `<dt>Opera</dt><dd>Pezzo unico</dd>`;
   const gb = $("#vGenBtn"), g = $("#vGen");
@@ -313,6 +314,7 @@ $("#vAsk").addEventListener("click", e => {
     closeViewer(true);
     const f = $("#form");
     f.motivo.value = "Informazioni su un'opera";
+    f.opera.value = `${o.titolo} (n. ${o.n})`;
     f.messaggio.value = `Buongiorno, vorrei ricevere informazioni sull'opera "${o.titolo}" (n. ${o.n}).`;
     window.scrollTo(0, $("#contatti").getBoundingClientRect().top + scrollY);
   });
@@ -339,6 +341,8 @@ let zs = 1, zx = 0, zy = 0;
 function applyZoom(anim) {
   zoomEl.style.transition = anim ? "transform .35s cubic-bezier(.16,1,.3,1)" : "none";
   zoomEl.style.transform = `translate3d(${zx}px, ${zy}px, 0) scale(${zs})`;
+  // non ingrandito: il dito in verticale fa scorrere la pagina verso descrizione e misure
+  stage.classList.toggle("zoomed", zs > 1.02);
 }
 function resetZoom(anim = true) { zs = 1; zx = 0; zy = 0; applyZoom(anim); }
 function clampPan() {
@@ -357,7 +361,8 @@ if (!finePointer) {
     return { px: a.x, py: a.y, s: zs, x: zx, y: zy, two: false };
   };
   stage.addEventListener("pointerdown", e => {
-    stage.setPointerCapture(e.pointerId);
+    if (e.target.closest("button")) return;
+    if (zs > 1.02 || pts.size) { try { stage.setPointerCapture(e.pointerId); } catch (err) {} }
     pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
     start = snapshot(); swipeDx = 0;
   });
@@ -373,7 +378,7 @@ if (!finePointer) {
     } else if (!start.two && !now.two) {
       const dx = now.px - start.px, dy = now.py - start.py;
       if (zs > 1.02) { zx = start.x + dx; zy = start.y + dy; clampPan(); applyZoom(false); }
-      else { swipeDx = dx; zx = dx * 0.5; zy = 0; applyZoom(false); }
+      else if (Math.abs(dx) > Math.abs(dy)) { swipeDx = dx; zx = dx * 0.5; zy = 0; applyZoom(false); }
     }
   });
   const end = e => {
@@ -394,7 +399,9 @@ if (!finePointer) {
     start = null;
   };
   stage.addEventListener("pointerup", end);
-  stage.addEventListener("pointercancel", end);
+  // il browser ha preso il gesto (scorrimento verticale): azzera senza fare altro
+  stage.addEventListener("pointercancel", () => { pts.clear(); start = null; swipeDx = 0; if (zs <= 1.02) resetZoom(true); });
+  $("#vMore").addEventListener("click", () => $(".viewer-info").scrollIntoView({ behavior: "smooth", block: "start" }));
 }
 
 /* ------------------------------------------------------------------
@@ -447,13 +454,26 @@ $$("main section[id]").forEach(s => secIO.observe(s));
 /* ------------------------------------------------------------------
    9. MODULO CONTATTI — apre il programma di posta con il messaggio pronto
 ------------------------------------------------------------------ */
-$("#form").addEventListener("submit", e => {
+$("#form").addEventListener("submit", async e => {
   e.preventDefault();
-  const f = e.currentTarget;
-  const subject = `[Studio Colarusso] ${f.motivo.value} — ${f.nome.value}`;
-  const body = `${f.messaggio.value}\n\n${f.nome.value}\n${f.email.value}`;
-  location.href = `mailto:${CONTATTI.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  $("#formMsg").textContent = "Si sta aprendo il tuo programma di posta con il messaggio già pronto.";
+  const f = e.currentTarget, msg = $("#formMsg"), btn = f.querySelector("button[type=submit]");
+  const data = { opera: f.opera.value, nome: f.nome.value, email: f.email.value, motivo: f.motivo.value, messaggio: f.messaggio.value, consenso: f.consenso.checked, sito_web: f.sito_web.value };
+  btn.disabled = true; msg.style.color = ""; msg.textContent = "Invio in corso…";
+  try {
+    const r = await fetch("/api/contatti", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || "Invio non riuscito");
+    f.reset();
+    msg.style.color = "var(--ink)";
+    msg.textContent = "Grazie, il messaggio è stato inviato. Ti risponderemo al più presto.";
+  } catch (err) {
+    // se il sito è aperto dal computer (senza server) o l'invio fallisce, apre il programma di posta
+    if (location.protocol === "file:" || err instanceof TypeError) {
+      const subject = `[Studio Colarusso] ${data.motivo} — ${data.nome}`;
+      location.href = `mailto:${CONTATTI.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(data.messaggio + "\n\n" + data.nome + "\n" + data.email)}`;
+      msg.textContent = "Si sta aprendo il tuo programma di posta con il messaggio già pronto.";
+    } else msg.textContent = err.message;
+  } finally { btn.disabled = false; }
 });
 
 /* ------------------------------------------------------------------

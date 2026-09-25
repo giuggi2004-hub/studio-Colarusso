@@ -42,23 +42,11 @@ window.SITO = {
         "Nasce a Vibo Valentia"
       ],
       [
-        "13 anni",
-        "Idea il décollage digitale"
-      ],
-      [
         "Formazione",
         "Studi classici a Vibo Valentia"
-      ],
-      [
-        "Università",
-        "Design, moda e comunicazione tra Roma, Milano e Reggio Calabria"
-      ],
-      [
-        "Bologna",
-        "Street art e situazionismo: nasce il décollage analogico"
       ]
     ],
-    "poeticaIntro": "Il décollage è un gesto doppio: si costruisce per strati, poi si strappa. Ciò che resta è ciò che la superficie nascondeva.",
+    "poeticaIntro": "Nel décollage lo strappo non distrugge l’immagine, la libera. I manifesti si sovrappongono, si consumano e, nel gesto che li lacera, lasciano emergere tracce di altre immagini e di altre temporalità.",
     "poetica1": [
       "Lo strappo non è inteso come atto distruttivo, ma come processo rivelatore. Come accade con le ferite e i traumi dell'animo umano, la lacerazione della superficie porta alla luce gli strati sottostanti.",
       "Le combinazioni di colori e di forme che emergono mettono a nudo la complessità e l'intreccio della personalità individuale: ogni opera è un ritratto di ciò che sta sotto."

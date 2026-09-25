@@ -277,18 +277,22 @@ textarea{resize:vertical}
 .v-next{right:368px}
 
 /* ---------------- TORNA SU (taglierino) ---------------- */
-.to-top{position:fixed;right:clamp(22px,3.4vw,48px);bottom:clamp(18px,3vw,40px);z-index:90;width:22px;padding:0;background:none;border:0;
-  opacity:0;visibility:hidden;transform:translateY(16px) rotate(24deg);transform-origin:50% 100%;
+.to-top{position:fixed;right:clamp(20px,3vw,44px);bottom:clamp(16px,2.6vw,36px);z-index:90;width:14px;padding:0;background:none;border:0;
+  opacity:0;visibility:hidden;transform:translateY(16px) rotate(24deg);transform-origin:50% 50%;
   transition:opacity .9s var(--ease-out),transform .9s var(--ease-out),visibility 0s linear .9s}
-.to-top.show{opacity:1;visibility:visible;transform:rotate(24deg);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out),visibility 0s}
-.to-top .knife{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(5px 9px 6px rgba(17,17,17,.16));transition:transform .6s var(--ease-out)}
-.to-top:hover .knife{transform:translateY(-4px)}
+.to-top.show{opacity:1;visibility:visible;transform:rotate(24deg);transition:opacity .9s var(--ease-out),transform .8s var(--ease),visibility 0s}
+.to-top[data-mode="down"]{transform:translateY(16px) rotate(204deg)}
+.to-top.show[data-mode="down"]{transform:rotate(204deg)}
+.to-top .knife{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(3px 6px 4px rgba(17,17,17,.14));transition:transform .6s var(--ease-out)}
+.to-top:hover .knife{transform:translateY(-3px)}
+.to-top::before{content:"";position:absolute;inset:-14px -16px}
+.to-top[data-mode="down"] .knife{transform-origin:50% 50%}
 .to-top:active .knife{transform:translateY(2px)}
 .to-top.cutting{transition:none}
 /* l'incisione laterale */
-.slit{position:fixed;z-index:89;width:3px;left:0;bottom:0;height:0;pointer-events:none;opacity:0;
-  background:linear-gradient(90deg,rgba(255,255,255,.95) 0 1px,rgba(17,17,17,.62) 1px 2px,rgba(17,17,17,.12) 2px 3px);
-  -webkit-mask:linear-gradient(to top,transparent,#000 14px,#000 calc(100% - 30px),transparent);mask:linear-gradient(to top,transparent,#000 14px,#000 calc(100% - 30px),transparent)}
+.slit{position:fixed;z-index:89;width:7px;left:0;bottom:0;height:0;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.95) 1.5px,rgba(196,188,176,.55) 2.2px,rgba(92,84,74,.34) 3px,rgba(92,84,74,.22) 3.8px,rgba(120,110,98,.10) 5px,rgba(120,110,98,0) 7px);
+  -webkit-mask:linear-gradient(to top,transparent,#000 18px,#000 calc(100% - 40px),transparent);mask:linear-gradient(to top,transparent,#000 18px,#000 calc(100% - 40px),transparent)}
 
 /* ---------------- ELEMENTI COMUNI A TUTTI I DISPOSITIVI ---------------- */
 html{-webkit-tap-highlight-color:transparent}
@@ -403,7 +407,7 @@ html{-webkit-tap-highlight-color:transparent}
   .foot{padding-left:20px;padding-right:20px}
   .legal-links{flex-direction:column;gap:6px}
   .legal-links button{text-align:left;padding:10px 0}
-  .to-top{width:18px}
+  .to-top{width:12px}
 }
 
 @media (prefers-reduced-motion:reduce){

@@ -475,8 +475,9 @@ html{-webkit-tap-highlight-color:transparent}
 .float.lit img{filter:brightness(1.05) saturate(1.04)}
 .float.lit figcaption{color:#9a958c}
 .float.lit figcaption b{color:#f3efe7}
-.lamp-hint{color:var(--ink)}
-@media (max-width:620px){ .lamp{width:min(62%,300px);margin-bottom:10px;padding:14px 0 10px} }
+.lamp-note{text-align:center;margin:calc(-1 * clamp(30px,6vh,70px)) auto clamp(28px,5vh,56px);padding:0 20px;font-family:var(--sans);font-weight:300;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey)}
+.lamp-note::before{content:"";display:block;width:1px;height:22px;background:var(--line);margin:0 auto 12px}
+@media (max-width:620px){ .lamp{width:min(62%,300px);margin-bottom:10px;padding:14px 0 10px} .lamp-note{font-size:9.5px;letter-spacing:.24em;margin-bottom:18px} }
 @media (prefers-reduced-motion:reduce){ .night,.beam,.float .frame::after{transition:none} }
 
 /* ---------------- CONDIVIDI ---------------- */

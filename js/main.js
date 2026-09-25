@@ -42,12 +42,78 @@ const heroO = OPERE[heroIdx];
 $("#heroWork").innerHTML = `<img src="${heroO.foto}" alt="${esc(heroO.titolo)}, ${esc(heroO.tecnica)}" width="${heroO.w}" height="${heroO.h}" fetchpriority="high" decoding="async"><figcaption>${esc(heroO.titolo)}${heroO.anno ? ", " + heroO.anno : ""}</figcaption>`;
 $("#heroWork").dataset.work = heroIdx;
 
+// Faretto da quadro (visto di fronte): piastra a muro, due bracci, barra in nichel spazzolato
+const LAMP_SVG = `<svg viewBox="0 0 400 96" aria-hidden="true">
+  <defs>
+    <linearGradient id="lmBar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9a9994"/><stop offset=".08" stop-color="#d9d8d4"/><stop offset=".22" stop-color="#f6f5f2"/>
+      <stop offset=".34" stop-color="#e2e1dd"/><stop offset=".55" stop-color="#bebdb8"/><stop offset=".78" stop-color="#9c9b96"/>
+      <stop offset=".93" stop-color="#7a7975"/><stop offset="1" stop-color="#63625e"/>
+    </linearGradient>
+    <linearGradient id="lmCap" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8e8d88"/><stop offset=".5" stop-color="#cfcec9"/><stop offset="1" stop-color="#a3a29d"/>
+    </linearGradient>
+    <linearGradient id="lmPlate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f1f0ed"/><stop offset=".5" stop-color="#d4d3cf"/><stop offset="1" stop-color="#aeada8"/>
+    </linearGradient>
+    <linearGradient id="lmPlateSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/>
+    </linearGradient>
+    <linearGradient id="lmCyl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8f8e89"/><stop offset=".3" stop-color="#f3f2ef"/><stop offset=".6" stop-color="#c3c2bd"/><stop offset="1" stop-color="#7b7a75"/>
+    </linearGradient>
+    <linearGradient id="lmArm" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8d8c87"/><stop offset=".45" stop-color="#f0efec"/><stop offset="1" stop-color="#9a9994"/>
+    </linearGradient>
+    <pattern id="lmBrush" width="400" height="3" patternUnits="userSpaceOnUse">
+      <rect width="400" height="1" fill="#fff" opacity=".07"/>
+    </pattern>
+    <filter id="lmSoft" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="lmSoft2" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <radialGradient id="lmGlow" cx=".5" cy="0" r=".5"><stop offset="0" stop-color="#fff2dc"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g class="lm-shadow">
+    <ellipse cx="200" cy="30" rx="26" ry="5" fill="#000" opacity=".16" filter="url(#lmSoft)"/>
+    <rect x="30" y="78" width="340" height="7" rx="3.5" fill="#000" opacity=".16" filter="url(#lmSoft)"/>
+  </g>
+  <rect x="178" y="4" width="44" height="23" rx="2.5" fill="url(#lmPlate)"/>
+  <rect x="178" y="4" width="44" height="23" rx="2.5" fill="url(#lmPlateSide)"/>
+  <rect x="178.6" y="4.6" width="42.8" height="1.2" rx=".6" fill="#fff" opacity=".8"/>
+  <rect x="178" y="25.6" width="44" height="1.4" rx=".7" fill="#000" opacity=".12"/>
+  <rect x="184" y="17" width="32" height="8" rx="4" fill="url(#lmCyl)"/>
+  <rect x="190.5" y="17" width="1.2" height="8" fill="#000" opacity=".18"/>
+  <rect x="208.3" y="17" width="1.2" height="8" fill="#000" opacity=".18"/>
+  <path d="M191 21 C 187 36, 189 50, 194 62" fill="none" stroke="#6e6d69" stroke-width="4.6" stroke-linecap="round" opacity=".5"/>
+  <path d="M209 21 C 213 36, 211 50, 206 62" fill="none" stroke="#6e6d69" stroke-width="4.6" stroke-linecap="round" opacity=".5"/>
+  <path d="M191 21 C 187 36, 189 50, 194 62" fill="none" stroke="url(#lmArm)" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M209 21 C 213 36, 211 50, 206 62" fill="none" stroke="url(#lmArm)" stroke-width="3.4" stroke-linecap="round"/>
+  <rect x="187" y="58" width="26" height="9" rx="4.5" fill="url(#lmCyl)"/>
+  <rect x="194" y="58" width="1" height="9" fill="#000" opacity=".2"/>
+  <rect x="205" y="58" width="1" height="9" fill="#000" opacity=".2"/>
+  <rect x="20" y="64" width="360" height="16" rx="8" fill="url(#lmBar)"/>
+  <rect x="20" y="64" width="360" height="16" rx="8" fill="url(#lmBrush)"/>
+  <rect x="30" y="67" width="340" height="1.4" rx=".7" fill="#fff" opacity=".85"/>
+  <rect x="20" y="64" width="9" height="16" rx="4.5" fill="url(#lmCap)"/>
+  <rect x="371" y="64" width="9" height="16" rx="4.5" fill="url(#lmCap)"/>
+  <rect x="28.4" y="64.5" width=".9" height="15" fill="#000" opacity=".25"/>
+  <rect x="370.7" y="64.5" width=".9" height="15" fill="#000" opacity=".25"/>
+  <rect x="34" y="78.2" width="332" height="2.6" rx="1.3" fill="#d9d6cf"/>
+  <g class="lm-dim" fill="#000"><rect x="178" y="4" width="44" height="23" rx="2.5"/><path d="M191 21 C 187 36, 189 50, 194 62" fill="none" stroke="#000" stroke-width="4.6" stroke-linecap="round"/><path d="M209 21 C 213 36, 211 50, 206 62" fill="none" stroke="#000" stroke-width="4.6" stroke-linecap="round"/><rect x="187" y="58" width="26" height="9" rx="4.5"/><rect x="20" y="64" width="360" height="16" rx="8"/></g>
+  <g class="lm-glow">
+    <rect x="34" y="78.2" width="332" height="2.6" rx="1.3" fill="#fff4e0"/>
+    <rect x="30" y="78" width="340" height="5" rx="2.5" fill="#ffe2b5" opacity=".9" filter="url(#lmSoft2)"/>
+  </g>
+</svg>`;
 // Selezione flottante
 const floating = $("#floating");
 floating.innerHTML = SELEZIONE.map(byN).filter(i => i > -1).map((i, k) => {
   const o = OPERE[i];
   return `<figure class="float reveal" data-work="${i}">
-    <div class="frame" data-depth="${[14, 8, 20, 10, 16, 6][k % 6]}"><img src="${thumb(o)}" alt="${esc(o.titolo)}, ${esc(o.tecnica)}" width="${o.w}" height="${o.h}" loading="lazy" decoding="async"></div>
+    <div class="hang" data-depth="${[14, 8, 20, 10, 16, 6][k % 6]}">
+      <button type="button" class="lamp" aria-label="Accendi la luce su ${esc(o.titolo)}" aria-pressed="false">${LAMP_SVG}</button>
+      <div class="frame"><img src="${thumb(o)}" alt="${esc(o.titolo)}, ${esc(o.tecnica)}" width="${o.w}" height="${o.h}" loading="lazy" decoding="async"></div>
+      <span class="beam" aria-hidden="true"></span>
+    </div>
     <figcaption data-speed="${k % 2 ? 0.05 : -0.04}"><b>${esc(o.titolo)}</b><span>${pad2(k + 1)}</span></figcaption>
   </figure>`;
 }).join("");
@@ -213,8 +279,9 @@ if (finePointer) {
     const t = e.target;
     const inStage = t.closest && t.closest("#stage") && t.id === "vImg";
     cur.classList.toggle("is-lens", !!inStage);
-    cur.classList.toggle("is-work", !inStage && !!(t.closest && t.closest("[data-work]")));
-    cur.classList.toggle("is-link", !!(t.closest && t.closest("a, button, select, input, textarea, label")) && !t.closest("[data-work]"));
+    const onLamp = !!(t.closest && t.closest(".lamp"));
+    cur.classList.toggle("is-work", !inStage && !onLamp && !!(t.closest && t.closest("[data-work]")));
+    cur.classList.toggle("is-link", onLamp || (!!(t.closest && t.closest("a, button, select, input, textarea, label")) && !t.closest("[data-work]")));
     cur.classList.toggle("is-dark", !!(t.closest && t.closest(".poetics")));
   }, { passive: true });
   document.addEventListener("mouseleave", () => (cur.style.opacity = 0));
@@ -247,6 +314,67 @@ function loop() {
   requestAnimationFrame(loop);
 }
 if (finePointer) requestAnimationFrame(loop);   // su telefono niente parallasse: pagina più fluida
+
+/* ------------------------------------------------------------------
+   6b. FARETTI (solo nella sezione Opere)
+   Si accendono solo sostando sul faretto (o toccandolo sul telefono):
+   luce calda sul quadro e sala che si fa buia, come in galleria.
+------------------------------------------------------------------ */
+const night = $("#night");
+let litFig = null, onTimer = null, offTimer = null;
+function lightOn(fig) {
+  clearTimeout(offTimer);
+  if (litFig === fig) return;
+  if (litFig) lightOff(true);
+  const hang = $(".hang", fig), lamp = $(".lamp", fig), beam = $(".beam", fig);
+  beam.style.top = (lamp.offsetTop + lamp.offsetHeight * 0.9) + "px";
+  litFig = fig;
+  fig.classList.add("lit");
+  lamp.setAttribute("aria-pressed", "true");
+  night.classList.add("on");
+  // sul telefono porta il quadro illuminato al centro dello schermo
+  if (!finePointer) {
+    const r = fig.getBoundingClientRect(), target = r.top + scrollY - Math.max(70, (innerHeight - r.height) / 2);
+    if (Math.abs(target - scrollY) > 40) window.scrollTo({ top: target, behavior: reduceMotion ? "auto" : "smooth" });
+  }
+}
+function lightOff(now) {
+  clearTimeout(onTimer);
+  if (!litFig) return;
+  const fig = litFig; litFig = null;
+  fig.classList.remove("lit");
+  $(".lamp", fig).setAttribute("aria-pressed", "false");
+  if (!now || !document.querySelector(".float.lit")) night.classList.remove("on");
+}
+floating.addEventListener("click", e => {
+  const lamp = e.target.closest(".lamp");
+  if (!lamp) return;
+  e.stopPropagation();                       // il faretto non apre il quadro
+  const fig = lamp.closest(".float");
+  litFig === fig ? lightOff() : lightOn(fig);
+}, true);
+if (finePointer) {
+  // sosta di un attimo sul faretto: chi ci passa sopra per caso non accende niente
+  floating.addEventListener("mouseover", e => {
+    const lamp = e.target.closest(".lamp"), fig = e.target.closest(".float");
+    if (lamp) { clearTimeout(offTimer); clearTimeout(onTimer); onTimer = setTimeout(() => lightOn(lamp.closest(".float")), 380); }
+    else if (fig && fig === litFig) clearTimeout(offTimer);
+  });
+  floating.addEventListener("mouseout", e => {
+    const to = e.relatedTarget;
+    if (e.target.closest(".lamp") && !(to && to.closest && to.closest(".lamp"))) clearTimeout(onTimer);
+    if (litFig && !(to && to.closest && to.closest(".float") === litFig)) { clearTimeout(offTimer); offTimer = setTimeout(() => lightOff(), 260); }
+  });
+}
+// sul telefono: si spegne toccando altrove o scorrendo via
+document.addEventListener("click", e => { if (litFig && !e.target.closest(".float.lit")) lightOff(); });
+let litY = 0;
+addEventListener("scroll", () => {
+  if (!litFig) return;
+  const r = litFig.getBoundingClientRect();
+  if (r.bottom < 60 || r.top > innerHeight - 60) lightOff();
+}, { passive: true });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && litFig) lightOff(); });
 
 /* ------------------------------------------------------------------
    7. VISTA A SCHERMO INTERO + LENTE D'INGRANDIMENTO
@@ -291,7 +419,7 @@ function closeViewer(silent) {
 }
 document.addEventListener("click", e => {
   const w = e.target.closest("[data-work]");
-  if (w) openViewer(+w.dataset.work);
+  if (w) { lightOff(true); night.classList.remove("on"); openViewer(+w.dataset.work); }
 });
 $("#vClose").onclick = () => closeViewer();
 $("#vPrev").onclick = () => fillViewer(cur_i - 1);
@@ -302,23 +430,53 @@ $("#vAskM").onclick = () => $("#vAsk").click();
 $("#vGenBtn").onclick = e => { e.currentTarget.classList.toggle("open"); $("#vGen").classList.toggle("open"); };
 document.addEventListener("keydown", e => {
   if (viewer.hidden) return;
+  if (!ask.hidden) { if (e.key === "Escape") closeAsk(); return; }
   if (e.key === "Escape") closeViewer();
   if (e.key === "ArrowRight") fillViewer(cur_i + 1);
   if (e.key === "ArrowLeft") fillViewer(cur_i - 1);
 });
-// "Chiedi informazioni" su un'opera
-$("#vAsk").addEventListener("click", e => {
+// Invio di un messaggio al gestionale / email dello studio (senza aprire il programma di posta)
+async function sendContact(data) {
+  let r;
+  try {
+    r = await fetch("/api/contatti", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+  } catch (e) { throw new Error("Connessione assente: controlla internet e riprova."); }
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error && !/Scrivi direttamente/.test(j.error) ? j.error : "Invio non riuscito, riprova tra qualche istante.");
+}
+// "Chiedi informazioni" su un'opera: modulo rapido sopra il quadro
+const ask = $("#ask"), askForm = $("#askForm");
+let askOpera = null;
+function openAsk() {
+  askOpera = OPERE[cur_i];
+  $("#askTitle").textContent = askOpera.titolo;
+  $("#askImg").src = askOpera.anteprima || askOpera.foto;
+  askForm.hidden = false; $("#askDone").hidden = true; $("#askMsg").textContent = "";
+  askForm.messaggio.value = `Buongiorno, vorrei ricevere informazioni sull'opera ${askOpera.titolo} (n. ${askOpera.n}).`;
+  ask.hidden = false;
+  setTimeout(() => (askForm.nome.value ? askForm.email : askForm.nome).focus({ preventScroll: true }), 50);
+}
+function closeAsk() { ask.hidden = true; }
+$("#vAsk").addEventListener("click", e => { e.preventDefault(); openAsk(); });
+$("#askClose").onclick = closeAsk; $("#askOk").onclick = closeAsk;
+ask.addEventListener("click", e => { if (e.target === ask) closeAsk(); });
+askForm.addEventListener("submit", async e => {
   e.preventDefault();
-  const o = OPERE[cur_i];
-  tearTransition("Contatti", () => {
-    closeViewer(true);
-    const f = $("#form");
-    f.motivo.value = "Informazioni su un'opera";
-    f.opera.value = `${o.titolo} (n. ${o.n})`;
-    f.messaggio.value = `Buongiorno, vorrei ricevere informazioni sull'opera "${o.titolo}" (n. ${o.n}).`;
-    window.scrollTo(0, $("#contatti").getBoundingClientRect().top + scrollY);
-  });
+  const f = askForm, msg = $("#askMsg"), btn = f.querySelector(".ask-send");
+  if (!f.nome.value.trim()) return msg.textContent = "Scrivi il tuo nome.", f.nome.focus();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) return msg.textContent = "Controlla l'indirizzo email.", f.email.focus();
+  if (!f.messaggio.value.trim()) return msg.textContent = "Scrivi un messaggio.", f.messaggio.focus();
+  if (!f.consenso.checked) return msg.textContent = "Serve il consenso per poterti rispondere.";
+  btn.disabled = true; msg.textContent = "Invio in corso…";
+  try {
+    await sendContact({ opera: `${askOpera.titolo} (n. ${askOpera.n})`, nome: f.nome.value, email: f.email.value, motivo: "Informazioni su un'opera", messaggio: f.messaggio.value, consenso: true, sito_web: f.sito_web.value });
+    // ricorda nome ed email per la prossima richiesta (solo su questo dispositivo)
+    try { localStorage.setItem("sc-contatto", JSON.stringify({ nome: f.nome.value, email: f.email.value })); } catch (err) {}
+    askForm.hidden = true; $("#askDone").hidden = false;
+  } catch (err) { msg.textContent = err.message; }
+  finally { btn.disabled = false; }
 });
+try { const c = JSON.parse(localStorage.getItem("sc-contatto") || "null"); if (c) { askForm.nome.value = c.nome || ""; askForm.email.value = c.email || ""; } } catch (err) {}
 // Lente: mostra la materia strappata da vicino
 if (finePointer) {
   vImg.addEventListener("mousemove", e => {
@@ -452,7 +610,7 @@ const secIO = new IntersectionObserver(es => es.forEach(x => {
 $$("main section[id]").forEach(s => secIO.observe(s));
 
 /* ------------------------------------------------------------------
-   9. MODULO CONTATTI — apre il programma di posta con il messaggio pronto
+   9. MODULO CONTATTI — invia il messaggio al gestionale e alla email dello studio
 ------------------------------------------------------------------ */
 $("#form").addEventListener("submit", async e => {
   e.preventDefault();
@@ -460,20 +618,12 @@ $("#form").addEventListener("submit", async e => {
   const data = { opera: f.opera.value, nome: f.nome.value, email: f.email.value, motivo: f.motivo.value, messaggio: f.messaggio.value, consenso: f.consenso.checked, sito_web: f.sito_web.value };
   btn.disabled = true; msg.style.color = ""; msg.textContent = "Invio in corso…";
   try {
-    const r = await fetch("/api/contatti", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(j.error || "Invio non riuscito");
+    await sendContact(data);
     f.reset();
     msg.style.color = "var(--ink)";
     msg.textContent = "Grazie, il messaggio è stato inviato. Ti risponderemo al più presto.";
-  } catch (err) {
-    // se il sito è aperto dal computer (senza server) o l'invio fallisce, apre il programma di posta
-    if (location.protocol === "file:" || err instanceof TypeError) {
-      const subject = `[Studio Colarusso] ${data.motivo} — ${data.nome}`;
-      location.href = `mailto:${CONTATTI.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(data.messaggio + "\n\n" + data.nome + "\n" + data.email)}`;
-      msg.textContent = "Si sta aprendo il tuo programma di posta con il messaggio già pronto.";
-    } else msg.textContent = err.message;
-  } finally { btn.disabled = false; }
+  } catch (err) { msg.style.color = ""; msg.textContent = err.message; }
+  finally { btn.disabled = false; }
 });
 
 /* ------------------------------------------------------------------

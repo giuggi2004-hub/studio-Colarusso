@@ -670,4 +670,39 @@ $("#legalClose").onclick = closeLegal;
 legal.addEventListener("click", e => { if (e.target === legal) closeLegal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !legal.hidden) closeLegal(); });
 if (location.hash === "#privacy") openLegal("privacy");
+
+/* ------------------------------------------------------------------
+   12. CONDIVIDI (il sito o una singola opera)
+------------------------------------------------------------------ */
+const shareBox = $("#share");
+async function shareLink(url, title, text) {
+  if (navigator.share) {
+    try { await navigator.share({ title, text, url }); return; } catch (e) { if (e && e.name === "AbortError") return; }
+  }
+  const enc = encodeURIComponent;
+  $("#shareTitle").textContent = title;
+  $("#shWa").href = `https://wa.me/?text=${enc(text + " " + url)}`;
+  $("#shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`;
+  $("#shMail").href = `mailto:?subject=${enc(title)}&body=${enc(text + "\n" + url)}`;
+  $("#shCopy").onclick = async () => {
+    try { await navigator.clipboard.writeText(url); $("#shareMsg").textContent = "Link copiato."; }
+    catch (e) { $("#shareMsg").textContent = url; }
+  };
+  $("#shareMsg").textContent = "";
+  shareBox.hidden = false;
+}
+$("#shareClose").onclick = () => (shareBox.hidden = true);
+shareBox.addEventListener("click", e => { if (e.target === shareBox) shareBox.hidden = true; });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !shareBox.hidden) shareBox.hidden = true; });
+$("#shareSite").onclick = () => shareLink(location.origin + "/", "Studio Colarusso", "Guarda le opere di Giuseppe Colarusso:");
+$("#shareWork").onclick = () => {
+  const o = OPERE[cur_i];
+  shareLink(`${location.origin}/#opera-${o.n}`, `${o.titolo} — Studio Colarusso`, `Guarda quest'opera di Giuseppe Colarusso: ${o.titolo}`);
+};
+// chi apre un link condiviso di un'opera la vede subito a schermo intero
+const sharedN = (location.hash.match(/^#opera-(\d+)$/) || [])[1];
+if (sharedN) {
+  const idx = OPERE.findIndex(o => o.n === +sharedN);
+  if (idx > -1) introReady.then(() => setTimeout(() => openViewer(idx), 1400));
+}
 })();

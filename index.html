@@ -7,7 +7,15 @@
 <meta name="description" content="Studio Colarusso: le opere di Giuseppe Colarusso, artista visivo che lavora con il décollage tra Bologna e Vibo Valentia. Memoria collettiva, cultura pop e indagine psicologica.">
 <meta property="og:title" content="Studio Colarusso — Giuseppe Colarusso">
 <meta property="og:description" content="Décollage tra memoria collettiva, cultura pop e indagine psicologica. Bologna — Vibo Valentia.">
-<meta property="og:image" content="opera-41.webp">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.studiocolarusso.com/">
+<meta property="og:site_name" content="Studio Colarusso">
+<meta property="og:image" content="https://www.studiocolarusso.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Studio Colarusso">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.studiocolarusso.com/og-image.png">
 <meta name="theme-color" content="#F9F8F6">
 <link rel="icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -236,6 +244,7 @@
 <footer class="foot">
   <div class="foot-top">
     <img src="logo.png" alt="Studio Colarusso" class="foot-logo">
+    <button type="button" class="share-btn" id="shareSite"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="18.5" r="2.4"/><path d="M8.2 10.9l7.6-4.2M8.2 13.1l7.6 4.2"/></svg><span>Condividi il sito</span></button>
     <div class="social social--small">
       <a class="soc-ig" id="igLink2" href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" class="dot"/></svg></a>
       <a class="soc-tt" id="ttLink2" href="#" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="M16.6 3c.3 2.2 1.6 3.7 3.9 3.9v3.1c-1.4.1-2.7-.3-3.9-1.1v6.2c0 3.4-2.4 5.9-5.8 5.9-3.1 0-5.6-2.4-5.6-5.5 0-3.4 2.9-5.9 6.4-5.4v3.2c-1.6-.4-3.2.6-3.2 2.2 0 1.3 1 2.3 2.4 2.3 1.5 0 2.5-1 2.5-2.9V3h3.3z"/></svg></a>
@@ -312,6 +321,7 @@
     <dl class="v-data" id="vData"></dl>
     <button class="v-genesis-btn" id="vGenBtn">La genesi di quest'opera <span>+</span></button>
     <p class="v-genesis" id="vGen"></p>
+    <button type="button" class="share-btn share-btn--work" id="shareWork"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="18.5" r="2.4"/><path d="M8.2 10.9l7.6-4.2M8.2 13.1l7.6 4.2"/></svg><span>Condividi quest'opera</span></button>
     <p class="v-hint">Passa sull'opera per vedere la materia da vicino</p>
     <a href="#contatti" class="link-cta" id="vAsk">Chiedi informazioni <span>→</span></a>
   </aside>
@@ -348,6 +358,22 @@
     <h3>Grazie!</h3>
     <p>Abbiamo ricevuto il tuo messaggio: ti risponderemo al più presto all'indirizzo che hai indicato.</p>
     <button type="button" class="btn" id="askOk">Torna all'opera</button>
+  </div>
+</div>
+
+<!-- Condivisione (quando il telefono non ha il pannello di condivisione) -->
+<div class="share" id="share" role="dialog" aria-modal="true" aria-labelledby="shareTitle" hidden>
+  <div class="share-box">
+    <button type="button" class="ask-x" id="shareClose" aria-label="Chiudi">✕</button>
+    <p class="ask-kicker">Condividi</p>
+    <h3 id="shareTitle">Studio Colarusso</h3>
+    <div class="share-list">
+      <a id="shWa" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="shFb" target="_blank" rel="noopener">Facebook</a>
+      <a id="shMail">Email</a>
+      <button type="button" id="shCopy">Copia link</button>
+    </div>
+    <p class="share-msg" id="shareMsg" role="status"></p>
   </div>
 </div>
 

@@ -11,15 +11,28 @@ window.SITO = {
   },
   "operaInApertura": 41,
   "selezione": [
+<<<<<<< HEAD
     41,
+=======
+    43,
+    46,
+    37,
+    5,
+    1,
+>>>>>>> parent of b1b122b (Aggiornamento dal gestionale)
     15,
     21,
+<<<<<<< HEAD
     37,
     43,
     5,
     34,
     46,
     24
+=======
+    24,
+    31
+>>>>>>> parent of b1b122b (Aggiornamento dal gestionale)
   ],
   "testi": {
     "heroSottotitolo": "Décollage tra memoria collettiva, cultura pop e indagine psicologica.",

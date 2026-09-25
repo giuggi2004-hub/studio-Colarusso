@@ -152,6 +152,7 @@ body:not(.is-loading) .hero-title .line:nth-child(3){animation-delay:.24s}
 .m-coda{grid-column:1/-1;font-family:var(--display);font-size:clamp(2.4rem,7vw,6.5rem);line-height:1;letter-spacing:-.02em;text-align:right}
 .m-coda span{color:var(--red);font-style:italic}
 
+
 /* ---------------- BIOGRAFIA ---------------- */
 .bio-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:clamp(16px,2.4vw,40px);row-gap:80px;max-width:1400px}
 .bio-side{grid-column:1/span 4;align-self:start;position:sticky;top:120px}
@@ -400,3 +401,8 @@ html{-webkit-tap-highlight-color:transparent}
   .reveal{opacity:1;transform:none}
 }
 .v-genesis-btn[hidden]{display:none}
+.hp{position:absolute !important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.v-desc{font-size:1.1rem;line-height:1.65;margin:-14px 0 26px;color:#3b3935}
+.v-desc[hidden]{display:none}
+
+

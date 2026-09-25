@@ -341,6 +341,8 @@ let zs = 1, zx = 0, zy = 0;
 function applyZoom(anim) {
   zoomEl.style.transition = anim ? "transform .35s cubic-bezier(.16,1,.3,1)" : "none";
   zoomEl.style.transform = `translate3d(${zx}px, ${zy}px, 0) scale(${zs})`;
+  // non ingrandito: il dito in verticale fa scorrere la pagina verso descrizione e misure
+  stage.classList.toggle("zoomed", zs > 1.02);
 }
 function resetZoom(anim = true) { zs = 1; zx = 0; zy = 0; applyZoom(anim); }
 function clampPan() {
@@ -359,7 +361,8 @@ if (!finePointer) {
     return { px: a.x, py: a.y, s: zs, x: zx, y: zy, two: false };
   };
   stage.addEventListener("pointerdown", e => {
-    stage.setPointerCapture(e.pointerId);
+    if (e.target.closest("button")) return;
+    if (zs > 1.02 || pts.size) { try { stage.setPointerCapture(e.pointerId); } catch (err) {} }
     pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
     start = snapshot(); swipeDx = 0;
   });
@@ -375,7 +378,7 @@ if (!finePointer) {
     } else if (!start.two && !now.two) {
       const dx = now.px - start.px, dy = now.py - start.py;
       if (zs > 1.02) { zx = start.x + dx; zy = start.y + dy; clampPan(); applyZoom(false); }
-      else { swipeDx = dx; zx = dx * 0.5; zy = 0; applyZoom(false); }
+      else if (Math.abs(dx) > Math.abs(dy)) { swipeDx = dx; zx = dx * 0.5; zy = 0; applyZoom(false); }
     }
   });
   const end = e => {
@@ -396,7 +399,9 @@ if (!finePointer) {
     start = null;
   };
   stage.addEventListener("pointerup", end);
-  stage.addEventListener("pointercancel", end);
+  // il browser ha preso il gesto (scorrimento verticale): azzera senza fare altro
+  stage.addEventListener("pointercancel", () => { pts.clear(); start = null; swipeDx = 0; if (zs <= 1.02) resetZoom(true); });
+  $("#vMore").addEventListener("click", () => $(".viewer-info").scrollIntoView({ behavior: "smooth", block: "start" }));
 }
 
 /* ------------------------------------------------------------------

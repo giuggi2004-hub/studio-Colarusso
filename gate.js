@@ -1,8 +1,5 @@
-// Il gestionale non ha un indirizzo da digitare: si apre dal gesto segreto sul logo.
-// /pannello mostra il gestionale SOLO a chi ha già fatto l'accesso (password + codice).
-// A tutti gli altri, come per /admin o qualsiasi indirizzo inesistente, risponde "Pagina non trovata".
 const ADMIN_HTML = require("./_lib/admin-page");
-const { isLogged } = require("./_lib/auth");
+const { safeEqual } = require("./_lib/auth");
 
 const NOT_FOUND = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Pagina non trovata — Studio Colarusso</title><link rel="icon" href="/favicon.png">
@@ -18,7 +15,8 @@ module.exports = (req, res) => {
 
   res.setHeader("X-Robots-Tag", "noindex, nofollow");
   res.setHeader("Cache-Control", "no-store");
-  if (asked === "pannello" && isLogged(req)) {
+  const key = String(process.env.ENTRY_KEY || "").replace(/^\/+|\/+$/g, "");
+  if (key.length >= 16 && safeEqual(asked, key)) {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("X-Frame-Options", "DENY");
     res.setHeader("Content-Security-Policy", "frame-ancestors 'none'");

@@ -4,8 +4,7 @@ const { gh, cfg } = require("../_lib/github");
 
 const HEADER = `/* =====================================================================
    STUDIO COLARUSSO — DATI DEL SITO
-   Questo file viene aggiornato dal gestionale (indirizzo-del-sito/admin/).
-   Puoi anche modificarlo a mano, ma attenzione a virgole e virgolette.
+   Contenuti del sito.
    ===================================================================== */
 window.SITO = `;
 const SAFE_PATH = /^img\/opere\/[a-z0-9-]+\.(webp|jpg|png)$|^opera-[0-9]+(-m)?\.webp$/;

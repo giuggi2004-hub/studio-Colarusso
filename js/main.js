@@ -592,11 +592,41 @@ burger.onclick = () => {
 };
 const nav = $("#nav");
 const toTop = $("#toTop");
+let cutting = false;
 const onScroll = () => {
   nav.classList.toggle("solid", scrollY > 40);
-  toTop.classList.toggle("show", scrollY > innerHeight * 1.2);
+  if (!cutting) toTop.classList.toggle("show", scrollY > innerHeight * 1.2);
 };
-toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
+// il taglierino sale lungo il lato della pagina lasciando un'incisione sottile, mentre si torna in cima
+toTop.addEventListener("click", () => {
+  if (cutting) return;
+  if (reduceMotion) { window.scrollTo(0, 0); return; }
+  cutting = true;
+  const slit = $("#slit"), tip = $(".k-tip", toTop).getBoundingClientRect();
+  const x = tip.left, y0 = tip.top, rise = y0 - 24, dur = 1050;
+  const ease = "cubic-bezier(.65,0,.25,1)";
+  slit.style.left = (x - 1) + "px";
+  slit.style.bottom = (innerHeight - y0) + "px";
+  slit.style.height = rise + "px";
+  slit.style.transformOrigin = "50% 100%";
+  slit.animate([{ opacity: 1, transform: "scaleY(0)" }, { opacity: 1, transform: "scaleY(1)" }],
+    { duration: dur, easing: ease, fill: "forwards" });
+  toTop.classList.add("cutting");
+  const k = toTop.animate([{ transform: "translateY(0) rotate(24deg)" }, { transform: `translateY(${-rise}px) rotate(24deg)` }],
+    { duration: dur, easing: ease, fill: "forwards" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  k.finished.then(() => {
+    // il taglierino sparisce in alto, l'incisione si richiude piano
+    const f = toTop.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: "forwards" });
+    slit.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, delay: 250, easing: "ease-out", fill: "forwards" });
+    return f.finished;
+  }).then(() => {
+    toTop.getAnimations().forEach(a => a.cancel());
+    toTop.classList.remove("cutting", "show");
+    setTimeout(() => { slit.getAnimations().forEach(a => a.cancel()); slit.style.height = "0"; }, 1000);
+    cutting = false; onScroll();
+  });
+});
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
 const io = new IntersectionObserver(es => es.forEach(x => {

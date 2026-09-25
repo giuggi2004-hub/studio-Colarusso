@@ -1,7 +1,6 @@
 /* =====================================================================
    STUDIO COLARUSSO — DATI DEL SITO
-   Questo file viene aggiornato dal gestionale (indirizzo-del-sito/admin/).
-   Puoi anche modificarlo a mano, ma attenzione a virgole e virgolette.
+   Contenuti del sito.
    ===================================================================== */
 window.SITO = {
   "contatti": {
@@ -9,17 +8,16 @@ window.SITO = {
     "instagram": "https://www.instagram.com/col4russo/",
     "tiktok": "https://www.tiktok.com/@col4russo"
   },
-  "operaInApertura": 41,
+  "operaInApertura": 37,
   "selezione": [
-    41,
     15,
     21,
-    37,
     43,
     5,
     34,
     46,
-    24
+    24,
+    37
   ],
   "testi": {
     "heroSottotitolo": "Décollage tra memoria collettiva, cultura pop e indagine psicologica.",
@@ -497,15 +495,16 @@ window.SITO = {
     },
     {
       "n": 37,
-      "titolo": "Décollage n. 37",
-      "anno": "",
-      "tecnica": "Décollage su carta",
-      "misure": "",
+      "titolo": "E POI C’È LEI …",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
       "genesi": "",
       "foto": "opera-37.webp",
       "anteprima": "opera-37-m.webp",
       "w": 876,
-      "h": 1115
+      "h": 1115,
+      "descrizione": "Omaggio a Moira Orfei"
     },
     {
       "n": 38,
@@ -553,7 +552,8 @@ window.SITO = {
       "foto": "opera-41.webp",
       "anteprima": "opera-41-m.webp",
       "w": 890,
-      "h": 1142
+      "h": 1142,
+      "descrizione": ""
     },
     {
       "n": 42,

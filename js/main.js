@@ -237,13 +237,12 @@ function tearTransition(label, onCovered) {
 // Apertura del sito
 function openIntro() {
   const intro = $("#intro"), logo = $(".intro-logo", intro);
-  if (reduceMotion) { intro.remove(); document.body.classList.remove("is-loading"); setTimeout(() => onScroll(), 0); return; }
+  if (reduceMotion) { intro.remove(); document.body.classList.remove("is-loading"); return; }
   const r = logo.getBoundingClientRect();
   layer.classList.add("active");
   const sheet = buildSheet({ logoRect: { x: r.left, y: r.top, width: r.width, height: r.height } });
   intro.remove();
   document.body.classList.remove("is-loading");
-  setTimeout(() => onScroll(), 1200);
   tearAway(sheet, 1300);
 }
 const introReady = Promise.all([
@@ -593,68 +592,37 @@ burger.onclick = () => {
 };
 const nav = $("#nav");
 const toTop = $("#toTop");
-// Taglierino: un solo tasto per scendere e per tornare su.
-// La lama segue il movimento: se stai scendendo ti porta alla sezione successiva, se stai risalendo ti riporta in cima.
-let cutting = false, knifeMode = "down", lastY = scrollY;
-function setKnifeMode(m) {
-  if (m === knifeMode) return;
-  knifeMode = m;
-  toTop.dataset.mode = m;
-  toTop.setAttribute("aria-label", m === "down" ? "Scendi alla sezione successiva" : "Torna all'inizio");
-  toTop.title = m === "down" ? "Scendi" : "Torna su";
-}
+// Taglierino "torna su": compare quando scendi; toccandolo fa un breve taglio laterale e ti riporta in cima.
+let cutting = false;
 const onScroll = () => {
   nav.classList.toggle("solid", scrollY > 40);
-  if (cutting) return;
-  const y = scrollY, vh = innerHeight, docH = document.documentElement.scrollHeight;
-  toTop.classList.toggle("show", !document.body.classList.contains("is-loading"));
-  if (y < vh * 0.5) setKnifeMode("down");
-  else if (y + vh > docH - 160) setKnifeMode("up");
-  else if (Math.abs(y - lastY) > 6) setKnifeMode(y > lastY ? "down" : "up");
-  lastY = y;
+  if (!cutting) toTop.classList.toggle("show", scrollY > innerHeight * 1.2);
 };
-setKnifeMode("up"); setKnifeMode("down");
-function nextTarget() {
-  const blocks = [...$$("main > section[id], #archivio, .foot")].sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
-  const t = blocks.find(el => el.getBoundingClientRect().top > 90);
-  const off = t && t.id === "archivio" ? 100 : 0;
-  return t ? Math.min(t.getBoundingClientRect().top + scrollY - off, document.documentElement.scrollHeight - innerHeight) : document.documentElement.scrollHeight;
-}
 toTop.addEventListener("click", () => {
   if (cutting) return;
-  const down = knifeMode === "down";
-  const goTo = down ? nextTarget() : 0;
-  if (reduceMotion) { window.scrollTo(0, goTo); return; }
+  if (reduceMotion) { window.scrollTo(0, 0); return; }
   cutting = true;
-  const rot = down ? 204 : 24;
   const slit = $("#slit"), tip = $(".k-tip", toTop).getBoundingClientRect();
-  const x = tip.left, y0 = tip.top, rise = y0 - 24, dur = 1050, ease = "cubic-bezier(.65,0,.25,1)";
+  const x = tip.left, y0 = tip.top, len = Math.min(150, y0 - 24), dur = 520, ease = "cubic-bezier(.5,0,.2,1)";
   slit.style.left = (x - 3) + "px";
   slit.style.bottom = (innerHeight - y0) + "px";
-  slit.style.height = rise + "px";
-  slit.style.transformOrigin = down ? "50% 0%" : "50% 100%";
+  slit.style.height = len + "px";
+  slit.style.transformOrigin = "50% 100%";
   toTop.classList.add("cutting");
-  // su: parte da qui e sale; giù: parte dall'alto e scende fino a qui
-  const from = down ? -rise : 0, to = down ? 0 : -rise;
-  slit.animate([{ opacity: 1, transform: "scaleY(0)" }, { opacity: 1, transform: "scaleY(1)" }], { duration: dur, easing: ease, fill: "forwards" });
+  // breve incisione verso l'alto, poi tutto si dissolve mentre la pagina torna in cima
+  slit.animate([{ opacity: 1, transform: "scaleY(0)" }, { opacity: 1, transform: "scaleY(1)", offset: .55 }, { opacity: 0, transform: "scaleY(1)" }],
+    { duration: dur + 420, easing: "ease-out", fill: "forwards" });
   const k = toTop.animate([
-    { transform: `translateY(${from}px) rotate(${rot}deg)`, opacity: down ? 0 : 1, offset: 0 },
-    { opacity: 1, offset: down ? .12 : 0 },
-    { transform: `translateY(${to}px) rotate(${rot}deg)`, opacity: 1, offset: 1 }
-  ], { duration: dur, easing: ease, fill: "forwards" });
-  window.scrollTo({ top: goTo, behavior: "smooth" });
+    { transform: "translateY(0) rotate(24deg)", opacity: 1 },
+    { transform: `translateY(${-len}px) rotate(24deg)`, opacity: 1, offset: .7 },
+    { transform: `translateY(${-len - 10}px) rotate(24deg)`, opacity: 0 }
+  ], { duration: dur + 160, easing: ease, fill: "forwards" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
   k.finished.then(() => {
-    slit.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, delay: 250, easing: "ease-out", fill: "forwards" });
-    if (down) return new Promise(r => setTimeout(r, 300));
-    return toTop.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 350, fill: "forwards" }).finished;
-  }).then(() => {
     toTop.getAnimations().forEach(a => a.cancel());
-    toTop.classList.remove("cutting");
-    if (!down) { toTop.classList.remove("show"); setTimeout(() => toTop.classList.add("show"), 600); }
-    setTimeout(() => { slit.getAnimations().forEach(a => a.cancel()); slit.style.height = "0"; }, 1100);
-    cutting = false; lastY = scrollY;
-    const vh = innerHeight, docH = document.documentElement.scrollHeight;
-    setKnifeMode(scrollY < vh * 0.5 ? "down" : scrollY + vh > docH - 160 ? "up" : knifeMode);
+    toTop.classList.remove("cutting", "show");
+    setTimeout(() => { slit.getAnimations().forEach(a => a.cancel()); slit.style.height = "0"; }, 400);
+    cutting = false; onScroll();
   });
 });
 addEventListener("scroll", onScroll, { passive: true }); onScroll();

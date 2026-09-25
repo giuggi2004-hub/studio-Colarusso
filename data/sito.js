@@ -26,7 +26,9 @@ window.SITO = {
     42,
     3,
     8,
-    37
+    37,
+    48,
+    49
   ],
   "testi": {
     "heroSottotitolo": "Décollage tra memoria collettiva, cultura pop e indagine psicologica.",
@@ -58,6 +60,45 @@ window.SITO = {
     ]
   },
   "opere": [
+    {
+      "n": 50,
+      "titolo": "“Lisa 6”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-50-muhj0c1hnzu.jpg",
+      "anteprima": "img/opere/opera-50-muhj0c1hnzu-m.jpg",
+      "w": 914,
+      "h": 1173
+    },
+    {
+      "n": 49,
+      "titolo": "“Arianny”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-49-muhizl9udgb.jpg",
+      "anteprima": "img/opere/opera-49-muhizl9udgb-m.jpg",
+      "w": 913,
+      "h": 1173
+    },
+    {
+      "n": 48,
+      "titolo": "“Lisa 5”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-48-muhiypgw3bs.jpg",
+      "anteprima": "img/opere/opera-48-muhiypgw3bs-m.jpg",
+      "w": 830,
+      "h": 1094
+    },
     {
       "n": 1,
       "titolo": "\"MARILYN feat. PUPI\"",

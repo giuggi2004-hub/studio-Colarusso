@@ -487,4 +487,58 @@ $("#legalClose").onclick = closeLegal;
 legal.addEventListener("click", e => { if (e.target === legal) closeLegal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !legal.hidden) closeLegal(); });
 if (location.hash === "#privacy") openLegal("privacy");
+
+/* ------------------------------------------------------------------
+   11. ACCESSO RISERVATO — nessun indirizzo da digitare.
+   Si apre tenendo premuta per 2 secondi la scritta "By GS ITAP" in fondo alla pagina.
+------------------------------------------------------------------ */
+(() => {
+  const by = $(".foot-by");
+  if (!by) return;
+  let timer = null;
+  let fired = false, openedAt = 0;
+  const start = () => { fired = false; clearTimeout(timer); timer = setTimeout(() => { fired = true; openDoor(); }, 2000); };
+  const stop = e => { clearTimeout(timer); if (fired && e && e.cancelable) e.preventDefault(); };
+  // mouse
+  by.addEventListener("mousedown", e => { if (e.button === 0) start(); });
+  ["mouseup", "mouseleave"].forEach(ev => by.addEventListener(ev, stop));
+  // dito (telefono e tablet)
+  by.addEventListener("touchstart", start, { passive: true });
+  by.addEventListener("touchend", stop, { passive: false });
+  ["touchcancel", "touchmove"].forEach(ev => by.addEventListener(ev, stop, { passive: true }));
+  by.addEventListener("contextmenu", e => e.preventDefault());
+  const post = (body) => fetch("/api/admin/login", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify(body) })
+    .then(async r => ({ ok: r.ok, j: await r.json().catch(() => ({})) }));
+  async function openDoor() {
+    try { const r = await fetch("/api/admin/session", { credentials: "same-origin", cache: "no-store" }); if ((await r.json()).logged) { location.href = "/pannello"; return; } } catch (e) {}
+    if ($(".door")) return;
+    const d = document.createElement("div");
+    d.className = "door";
+    d.innerHTML = `<form class="door-box" autocomplete="off">
+      <button type="button" class="door-x">Chiudi ✕</button>
+      <img src="logo.png" alt="">
+      <h2>Area riservata</h2>
+      <div class="d-pw"><p>Inserisci la password.</p><input type="password" name="password" autocomplete="current-password"></div>
+      <div class="d-code" hidden><p>Ti abbiamo inviato un codice di 6 cifre alla email dello studio.</p>
+        <input type="text" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="000000">
+        <label class="rem"><input type="checkbox" name="remember" checked> Ricorda questo dispositivo per 30 giorni</label></div>
+      <button class="btn" type="submit">Entra</button>
+      <p class="door-err"></p></form>`;
+    document.body.append(d); document.body.style.overflow = "hidden"; openedAt = Date.now();
+    const f = $("form", d), err = $(".door-err", d);
+    const close = () => { d.remove(); document.body.style.overflow = ""; };
+    $(".door-x", d).onclick = close;
+    d.addEventListener("click", e => { if (e.target === d && Date.now() - openedAt > 800) close(); });
+    f.password.focus();
+    f.onsubmit = async e => {
+      e.preventDefault();
+      const codeStep = !$(".d-code", d).hidden;
+      err.textContent = "…";
+      const { ok, j } = await post(codeStep ? { code: f.code.value, remember: f.remember.checked } : { password: f.password.value });
+      if (!ok) { err.textContent = j.error || "Accesso non riuscito"; if (/scadut/.test(j.error || "")) { $(".d-code", d).hidden = true; $(".d-pw", d).hidden = false; } return; }
+      if (j.step === "code") { err.textContent = ""; $(".d-pw", d).hidden = true; $(".d-code", d).hidden = false; f.code.focus(); return; }
+      location.href = "/pannello";
+    };
+  }
+})();
 })();

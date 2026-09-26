@@ -110,6 +110,7 @@ floating.innerHTML = SELEZIONE.map(byN).filter(i => i > -1).map((i, k) => {
   const o = OPERE[i];
   return `<figure class="float reveal" data-work="${i}">
     <div class="hang" data-depth="${[14, 8, 20, 10, 16, 6][k % 6]}">
+      <p class="lamp-tip" aria-hidden="true"><i>*</i> <span class="hint-desk">Sosta sul faretto per accendere la luce</span><span class="hint-touch">Premi sul faretto per accendere la luce</span></p>
       <button type="button" class="lamp" aria-label="Accendi la luce su ${esc(o.titolo)}" aria-pressed="false">${LAMP_SVG}</button>
       <div class="frame"><img src="${thumb(o)}" alt="${esc(o.titolo)}, ${esc(o.tecnica)}" width="${o.w}" height="${o.h}" loading="lazy" decoding="async"></div>
       <span class="beam" aria-hidden="true"></span>
@@ -330,6 +331,7 @@ function lightOn(fig) {
   beam.style.top = (lamp.offsetTop + lamp.offsetHeight * 0.9) + "px";
   litFig = fig;
   fig.classList.add("lit");
+  document.documentElement.classList.add("lamp-known");   // capito il gesto: gli avvisi spariscono
   lamp.setAttribute("aria-pressed", "true");
   night.classList.add("on");
   // sul telefono porta il quadro illuminato al centro dello schermo
@@ -366,6 +368,11 @@ if (finePointer) {
     if (litFig && !(to && to.closest && to.closest(".float") === litFig)) { clearTimeout(offTimer); offTimer = setTimeout(() => lightOff(), 260); }
   });
 }
+// avviso "* premi sul faretto": appare con calma quando il quadro arriva al centro dello schermo
+const tipIO = new IntersectionObserver(es => es.forEach(x => {
+  if (x.isIntersecting) { x.target.classList.add("tip-on"); tipIO.unobserve(x.target); }
+}), { rootMargin: "-30% 0px -30% 0px" });
+$$(".float", floating).forEach(f => tipIO.observe(f));
 // sul telefono: si spegne toccando altrove o scorrendo via
 document.addEventListener("click", e => { if (litFig && !e.target.closest(".float.lit")) lightOff(); });
 let litY = 0;

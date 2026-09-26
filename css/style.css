@@ -475,9 +475,7 @@ html{-webkit-tap-highlight-color:transparent}
 .float.lit img{filter:brightness(1.05) saturate(1.04)}
 .float.lit figcaption{color:#9a958c}
 .float.lit figcaption b{color:#f3efe7}
-.lamp-note{text-align:center;margin:calc(-1 * clamp(30px,6vh,70px)) auto clamp(28px,5vh,56px);padding:0 20px;font-family:var(--sans);font-weight:300;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey)}
-.lamp-note::before{content:"";display:block;width:1px;height:22px;background:var(--line);margin:0 auto 12px}
-@media (max-width:620px){ .lamp{width:min(62%,300px);margin-bottom:10px;padding:14px 0 10px} .lamp-note{font-size:9.5px;letter-spacing:.24em;margin-bottom:18px} }
+@media (max-width:620px){ .lamp{width:min(62%,300px);margin-bottom:10px;padding:14px 0 10px} }
 @media (prefers-reduced-motion:reduce){ .night,.beam,.float .frame::after{transition:none} }
 
 /* ---------------- CONDIVIDI ---------------- */
@@ -495,3 +493,19 @@ html{-webkit-tap-highlight-color:transparent}
 .share-list a:hover,.share-list button:hover{color:var(--red);padding-left:8px}
 .share-msg{font-family:var(--sans);font-weight:300;font-size:12px;color:var(--grey);min-height:1.2em;margin-top:12px;word-break:break-all}
 @media (max-width:620px){ .share{align-items:flex-end;padding:0} .share-box{max-width:none;padding-bottom:calc(24px + env(safe-area-inset-bottom));animation:barUp .45s var(--ease-out) both} }
+
+/* avviso sopra il faretto */
+.lamp-tip{margin:0 auto 10px;padding:0 16px;text-align:center;font-family:var(--sans);font-weight:300;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--grey);
+  opacity:0;transform:translateY(8px);filter:blur(2px);transition:opacity 1.4s var(--ease-out) .5s,transform 1.4s var(--ease-out) .5s,filter 1.4s var(--ease-out) .5s;pointer-events:none}
+.lamp-tip i{font-style:normal;color:var(--red);font-size:12px;letter-spacing:0;margin-right:.35em;vertical-align:-1px}
+.float.tip-on .lamp-tip{opacity:1;transform:none;filter:none}
+.lamp-known .lamp-tip,.float.lit .lamp-tip{opacity:0!important;transition:opacity .6s,transform .6s;transform:translateY(-4px)}
+@media (max-width:620px){ .lamp-tip{font-size:8.5px;letter-spacing:.2em;margin-bottom:4px} }
+
+/* scritta "su" sotto il taglierino */
+.to-top-label{position:fixed;z-index:89;right:calc(clamp(20px,3vw,44px) + 14px);bottom:calc(clamp(70px,11vh,120px) - 24px);
+  font-family:var(--sans);font-weight:400;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink);padding-left:.32em;text-shadow:0 0 4px var(--paper),0 0 8px var(--paper);
+  opacity:0;transform:translateY(8px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);pointer-events:none}
+.to-top.show + .to-top-label{opacity:.85;transform:none}
+.to-top.cutting + .to-top-label{opacity:0;transition:opacity .25s}
+@media (max-width:620px){ .to-top-label{right:calc(18px + 12px);bottom:calc(24vh + env(safe-area-inset-bottom) - 22px)} }

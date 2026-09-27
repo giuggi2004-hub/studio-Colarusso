@@ -8,7 +8,7 @@ window.SITO = {
     "instagram": "https://www.instagram.com/col4russo/",
     "tiktok": "https://www.tiktok.com/@col4russo"
   },
-  "operaInApertura": 56,
+  "operaInApertura": 37,
   "selezione": [
     5,
     1,
@@ -24,8 +24,7 @@ window.SITO = {
     48,
     49,
     52,
-    55,
-    37
+    55
   ],
   "testi": {
     "heroSottotitolo": "Décollage tra memoria collettiva, cultura pop e indagine psicologica.",

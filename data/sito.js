@@ -28,7 +28,9 @@ window.SITO = {
     8,
     37,
     48,
-    49
+    49,
+    52,
+    55
   ],
   "testi": {
     "heroSottotitolo": "Décollage tra memoria collettiva, cultura pop e indagine psicologica.",
@@ -60,6 +62,84 @@ window.SITO = {
     ]
   },
   "opere": [
+    {
+      "n": 56,
+      "titolo": "“SOPHIA",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-56-mujvgdany2e.jpg",
+      "anteprima": "img/opere/opera-56-mujvgdany2e-m.jpg",
+      "w": 882,
+      "h": 1116
+    },
+    {
+      "n": 55,
+      "titolo": "“8 LISAS”",
+      "anno": "2026",
+      "tecnica": "Décollage su carta",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-55-mujvfcou0y8.jpg",
+      "anteprima": "img/opere/opera-55-mujvfcou0y8-m.jpg",
+      "w": 885,
+      "h": 1118
+    },
+    {
+      "n": 54,
+      "titolo": "“Omaggio a Dario Argento”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-54-mujve7w1y2j.jpg",
+      "anteprima": "img/opere/opera-54-mujve7w1y2j-m.jpg",
+      "w": 904,
+      "h": 1162
+    },
+    {
+      "n": 53,
+      "titolo": "“Nuda”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 90 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-53-mujvcvb830s.jpg",
+      "anteprima": "img/opere/opera-53-mujvcvb830s-m.jpg",
+      "w": 1034,
+      "h": 1040
+    },
+    {
+      "n": 52,
+      "titolo": "“La dama rossa uccide sette volte”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-52-mujvbyu7nhj.jpg",
+      "anteprima": "img/opere/opera-52-mujvbyu7nhj-m.jpg",
+      "w": 914,
+      "h": 1147
+    },
+    {
+      "n": 51,
+      "titolo": "“CC”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 90 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-51-mujvathstos.jpg",
+      "anteprima": "img/opere/opera-51-mujvathstos-m.jpg",
+      "w": 1016,
+      "h": 988
+    },
     {
       "n": 50,
       "titolo": "“Lisa 6”",

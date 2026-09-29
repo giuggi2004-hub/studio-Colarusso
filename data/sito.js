@@ -57,6 +57,32 @@ window.SITO = {
   },
   "opere": [
     {
+      "n": 58,
+      "titolo": "“Lasciamo perdere”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-58-mumb97qn4eo.jpg",
+      "anteprima": "img/opere/opera-58-mumb97qn4eo-m.jpg",
+      "w": 909,
+      "h": 1137
+    },
+    {
+      "n": 57,
+      "titolo": "“Rosa”",
+      "anno": "2026",
+      "tecnica": "Décollage",
+      "misure": "90 × 120 cm",
+      "descrizione": "",
+      "genesi": "",
+      "foto": "img/opere/opera-57-mumb86fwej4.jpg",
+      "anteprima": "img/opere/opera-57-mumb86fwej4-m.jpg",
+      "w": 891,
+      "h": 1133
+    },
+    {
       "n": 56,
       "titolo": "“SOPHIA",
       "anno": "2026",
